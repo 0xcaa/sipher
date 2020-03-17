@@ -13,6 +13,7 @@ int main(int argc, char **argv)
 {
     int opt;
     char *text;
+
     if (argc!=2)
     {
         fprintf(stderr, "Too many arguments!\n");
