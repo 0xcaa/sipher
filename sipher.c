@@ -1,20 +1,44 @@
 #include <stdio.h>
+#include <unistd.h>
 #include <stdlib.h>
-#include <string.h>
-#include "sipherfuncs.h"
+#include <errno.h>
+
 #include "usage.h"
+#include "sipherfuncs.h"
+#include "list.h"
 
-
+#define SIZE 3000
 
 int main(int argc, char **argv)
 {
-    char opt[5] = { 0 };
-    char x[15] = "sipher";
+    int opt;
+    char *text;
+    if (argc!=2)
+    {
+        fprintf(stderr, "Too many arguments!\n");
+        printusage(argv[0]);
+        return 1;
+    }
 
-    strncpy(opt, argv[3], 8);
+    while((opt = getopt(argc, argv, "rul")) != -1)
+        switch(opt)
+        {
+            case 'r':
+                text = calloc(SIZE, sizeof(char));
+                printf("%s\n", rot(text));
+                free(text);
+                break;
+            case 'u':
+                printusage(argv[0]);
+                break;
+            case 'l':
+                list();
+                break;
+            return 1;
+        default:
+            perror("Invalid Option");
+            return 1;
+        }
 
-    if(strcmp(opt, "-r"))
-        rot(argv[3]);
-    else
-        printusage(x);
+    return 0;
 }

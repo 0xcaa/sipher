@@ -1,18 +1,18 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <unistd.h>
+
 #define ROT 1
 #define SIZE 3000
 
-char *rot(char text1[])
- {
+char *rot(char text[])
+{
      int i=0, x, y;
-     char *text;
      char *t;
-     text = calloc(SIZE, sizeof(char));
      t = calloc(SIZE, sizeof(char));
-     printf("skriv: ");
-     fgets(text, 30, stdin);
+     printf("write a text string or a file path: ");
+     fgets(text, SIZE, stdin);
 
      x=strlen(text)+1;
 
@@ -47,8 +47,5 @@ char *rot(char text1[])
      }
      strcpy(text, t);
      free(t);
-     y = x-1;
-     text[y] = '\0';
-     printf("%s\n", text);
-     free(text);
+     return text;
  }
