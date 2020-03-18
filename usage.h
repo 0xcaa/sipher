@@ -1,1 +1,1 @@
-void printusage(char *arg);
+void printusage(char *argv);

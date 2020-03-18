@@ -1,5 +1,5 @@
 CC=gcc
-cflags=-Wall -pedantic 
+CFLAGS=-g -Wall -pedantic 
 OBJS=sipher.o sipherfuncs.o usage.o list.o
 
 sipher: $(OBJS)

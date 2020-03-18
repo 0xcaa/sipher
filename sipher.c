@@ -13,14 +13,14 @@ int main(int argc, char **argv)
 {
     int opt;
     char *text;
-
+/*
     if (argc!=2)
     {
         fprintf(stderr, "Too many arguments!\n");
         printusage(argv[0]);
         return 1;
     }
-
+*/
     while((opt = getopt(argc, argv, "rul")) != -1)
         switch(opt)
         {

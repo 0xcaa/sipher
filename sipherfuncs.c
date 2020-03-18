@@ -8,7 +8,7 @@
 
 char *rot(char text[])
 {
-     int i=0, x, y, q;
+     int i=0, x, q, bytes;
      char *t;
      FILE *fp;
      t = calloc(SIZE, sizeof(char));
@@ -24,7 +24,7 @@ char *rot(char text[])
 
      x=strlen(text)+1;
 
-     if((fp = fopen(text, "r"))==0)
+     if((fp = fopen(text, "w+"))==0)
      {
          while((text[i]!='\0')&& (strlen(text))<x)
          {
@@ -62,7 +62,12 @@ char *rot(char text[])
 
     else
     {
-        printf("hihihihiiH");
+        fseek(fp, 0, SEEK_END);
+        bytes = ftell(fp);
+        rewind(fp);
+        quantity = bytes / sizeof(char);
+        fscanf(fp, "%s", t);
+        printf("%s\n", t);
+        return t;
     }
-    return 0;
  }
