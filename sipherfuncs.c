@@ -27,7 +27,6 @@ char *rot(char text[])
 
      if((fp = fopen(text, "r+"))==0)
      {
-         //går aldrig in i while loopen
          while((text[i]!='\0')&& (strlen(text))<x)
          {
              if(text[i]>122||text[i]<65)
@@ -72,13 +71,8 @@ char *rot(char text[])
         t = realloc(t, (bytes+1) * sizeof(char));
         text =  realloc(text, (bytes+1) * sizeof(char));
 
-        fread(t, sizeof(char), bytes, fp);
-
-        while((c = getc(fp)) != '\0')
+        while((c = getc(fp)) != EOF)
         {
-            //printf("asas");
-             if(c=='z')
-                 break;
              if(c>'z'||c<'A')
              {
                  t[i]=c;
@@ -103,12 +97,16 @@ char *rot(char text[])
                  i++;
                  continue;
              }
+             
              t[i]=c+ROT;
              i++;
         }
         fclose(fp);
+        fp = fopen(text, "w+");
+        fputs(t, fp);
+        fclose(fp);
         strcpy(text, t);
         free(t);
-        return text;
+        return "done!";
     }
  }
