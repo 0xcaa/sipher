@@ -4,14 +4,14 @@
 #include <unistd.h>
 
 #define ROT 1
-#define SIZE 3000
+#define SIZE 300
 
 char *rot(char text[])
 {
      int i=0, x, q, bytes;
      char *t;
      FILE *fp;
-     t = calloc(SIZE, sizeof(char));
+
      printf("Write a text string or a file path: ");
      fgets(text, SIZE, stdin);
 
@@ -23,9 +23,11 @@ char *rot(char text[])
      }
 
      x=strlen(text)+1;
+     t = calloc(x, sizeof(char));
 
-     if((fp = fopen(text, "w+"))==0)
+     if((fp = fopen(text, "r+"))==0)
      {
+         //går aldrig in i while loopen
          while((text[i]!='\0')&& (strlen(text))<x)
          {
              if(text[i]>122||text[i]<65)
@@ -62,12 +64,51 @@ char *rot(char text[])
 
     else
     {
+        char c;
         fseek(fp, 0, SEEK_END);
         bytes = ftell(fp);
         rewind(fp);
-        quantity = bytes / sizeof(char);
-        fscanf(fp, "%s", t);
-        printf("%s\n", t);
-        return t;
+
+        t = realloc(t, (bytes+1) * sizeof(char));
+        text =  realloc(text, (bytes+1) * sizeof(char));
+
+        fread(t, sizeof(char), bytes, fp);
+
+        while((c = getc(fp)) != '\0')
+        {
+            //printf("asas");
+             if(c=='z')
+                 break;
+             if(c>'z'||c<'A')
+             {
+                 t[i]=c;
+                 i++;
+                 continue;
+             }
+             else if(c>90 && c<97) 
+             {
+                 t[i]=c;
+                 i++;
+                 continue;
+             }
+             if((c+ROT)>122)
+             {
+                 t[i]=c-25;
+                 i++;
+                 continue;
+             }
+             else if((c+ROT)>90 && (c+ROT)<97)
+             {
+                 t[i]=c-25;
+                 i++;
+                 continue;
+             }
+             t[i]=c+ROT;
+             i++;
+        }
+        fclose(fp);
+        strcpy(text, t);
+        free(t);
+        return text;
     }
  }
