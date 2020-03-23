@@ -4,7 +4,7 @@
 #include <unistd.h>
 
 #define ROT 1
-#define SIZE 300
+#define SIZE 30000
 
 char *rot(char text[])
 {
@@ -117,7 +117,7 @@ char *rot(char text[])
 char* atbash(char text[])
 {
 
-    int i, x, q, len;
+    int i=0, x, q, len;
     const char zlph_upper[27] = "ZYXWVUTSRQPONMLKJIHGFEDCBA";
     const char zlph_lower[27] = "zyxwvutsrqponmlkjihgfedcba";
     const char alph_lower[27] = "abcdefghijklmnopqrstuvwxyz";
@@ -129,16 +129,19 @@ char* atbash(char text[])
     len=strlen(text)+1;
     text = realloc(text, len);
 
-   
-
       //radera \n från fgets
+     //printf("%s", text);
      for(q=0;q<strlen(text);q++)
      {
          if (text[q]=='\n')
+         {
              text[q]='\0';
+             break;
+         }
      }
-
-    for(i=0;i<=27;i++)
+    
+    //printf("%s", text);
+    while(1)
     {
         for(x=0;x<=27;x++)
         {
@@ -152,9 +155,13 @@ char* atbash(char text[])
                 text[i] = zlph_upper[x];
                 break;
             }
+            else if(text[i]=='\0'||text[i]=='\n')
+                goto end;
         }
+        i++;
     }
 
+    end:
     //printf("%s\n", text);
     return text;
 }

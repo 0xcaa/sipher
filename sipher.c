@@ -7,7 +7,7 @@
 #include "sipherfuncs.h"
 #include "list.h"
 
-#define SIZE 3000
+#define SIZE 30000
 
 int main(int argc, char **argv)
 {
