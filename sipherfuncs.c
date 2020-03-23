@@ -23,10 +23,11 @@ char *rot(char text[])
      }
 
      x=strlen(text)+1;
-     t = calloc(x, sizeof(char));
+     t = calloc(SIZE, sizeof(char));
 
      if((fp = fopen(text, "r+"))==0)
      {
+         t = realloc(t, (x) * sizeof(char));
          while((text[i]!='\0')&& (strlen(text))<x)
          {
              if(text[i]>122||text[i]<65)
@@ -116,8 +117,10 @@ char *rot(char text[])
 
 char* atbash(char text[])
 {
-
     int i=0, x, q, len;
+    FILE *fp;
+    char *filename;
+
     const char zlph_upper[27] = "ZYXWVUTSRQPONMLKJIHGFEDCBA";
     const char zlph_lower[27] = "zyxwvutsrqponmlkjihgfedcba";
     const char alph_lower[27] = "abcdefghijklmnopqrstuvwxyz";
@@ -127,10 +130,8 @@ char* atbash(char text[])
     printf("Write a text string or a file path: ");
     fgets(text, SIZE, stdin);
     len=strlen(text)+1;
-    text = realloc(text, len);
 
       //radera \n från fgets
-     //printf("%s", text);
      for(q=0;q<strlen(text);q++)
      {
          if (text[q]=='\n')
@@ -139,29 +140,76 @@ char* atbash(char text[])
              break;
          }
      }
-    
-    //printf("%s", text);
-    while(1)
+
+    filename = calloc(50, sizeof(char));
+    strncpy(filename, text, 50);
+
+    if((fp = fopen(filename, "r+"))==0)
     {
-        for(x=0;x<=27;x++)
+        text = realloc(text, len);
+        while(1)
         {
-            if(text[i]==alph_lower[x])
+            for(x=0;x<=27;x++)
             {
-                text[i] = zlph_lower[x];
-                break;
+                if(text[i]==alph_lower[x])
+                {
+                    text[i] = zlph_lower[x];
+                    break;
+                }
+                else if(text[i]==alph_upper[x])
+                {
+                    text[i] = zlph_upper[x];
+                    break;
+                }
+                else if(text[i]=='\0'||text[i]=='\n')
+                    goto end;
             }
-            else if(text[i]==alph_upper[x])
-            {
-                text[i] = zlph_upper[x];
-                break;
-            }
-            else if(text[i]=='\0'||text[i]=='\n')
-                goto end;
+            i++;
         }
-        i++;
+    }
+    else
+    {
+        char c;
+        int bytes;
+
+
+        fseek(fp, 0, SEEK_END);
+        bytes = ftell(fp);
+        rewind(fp);
+
+        text =  realloc(text, (bytes+1) * sizeof(char));
+        text[i] = '\0';
+        while((c = getc(fp)))
+        {
+            for(x=0;x<=27;x++)
+            {
+                if(c==alph_lower[x])
+                {
+                    text[i] = zlph_lower[x];
+                    break;
+                }
+                else if(c==alph_upper[x])
+                {
+                    text[i] = zlph_upper[x];
+                    break;
+                }
+                else if(c==EOF)
+                    goto fileend;
+                else
+                    text[i] = c;
+            }
+            i++;
+        }
     }
 
     end:
-    //printf("%s\n", text);
     return text;
+
+    fileend:
+    fclose(fp);
+    fp = fopen(filename, "w+");
+    fputs(text, fp);
+    free(filename);
+    fclose(fp);
+    return "done!";
 }
