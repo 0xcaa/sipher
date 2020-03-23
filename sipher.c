@@ -21,12 +21,17 @@ int main(int argc, char **argv)
         return 1;
     }
 */
-    while((opt = getopt(argc, argv, "rul")) != -1)
+    while((opt = getopt(argc, argv, "rula")) != -1)
         switch(opt)
         {
             case 'r':
                 text = calloc(SIZE, sizeof(char));
                 printf("%s\n", rot(text));
+                free(text);
+                break;
+            case 'a':
+                text = calloc(SIZE, sizeof(char));
+                printf("%s\n", atbash(text));
                 free(text);
                 break;
             case 'u':

@@ -110,3 +110,51 @@ char *rot(char text[])
         return "done!";
     }
  }
+
+
+
+
+char* atbash(char text[])
+{
+
+    int i, x, q, len;
+    const char zlph_upper[27] = "ZYXWVUTSRQPONMLKJIHGFEDCBA";
+    const char zlph_lower[27] = "zyxwvutsrqponmlkjihgfedcba";
+    const char alph_lower[27] = "abcdefghijklmnopqrstuvwxyz";
+    const char alph_upper[27] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+
+    printf("Write a text string or a file path: ");
+    fgets(text, SIZE, stdin);
+    len=strlen(text)+1;
+    text = realloc(text, len);
+
+   
+
+      //radera \n från fgets
+     for(q=0;q<strlen(text);q++)
+     {
+         if (text[q]=='\n')
+             text[q]='\0';
+     }
+
+    for(i=0;i<=27;i++)
+    {
+        for(x=0;x<=27;x++)
+        {
+            if(text[i]==alph_lower[x])
+            {
+                text[i] = zlph_lower[x];
+                break;
+            }
+            else if(text[i]==alph_upper[x])
+            {
+                text[i] = zlph_upper[x];
+                break;
+            }
+        }
+    }
+
+    //printf("%s\n", text);
+    return text;
+}
