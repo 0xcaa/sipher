@@ -1,2 +1,2 @@
-char* rot(char text[]);
-char* atbash(char text[]);
+void rot(void);
+void atbash(void);

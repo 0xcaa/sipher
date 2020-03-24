@@ -6,11 +6,13 @@
 #define ROT 1
 #define SIZE 30000
 
-char *rot(char text[])
+void rot(void)
 {
      int i=0, x, q, bytes;
      char *t;
+     char *text;
      FILE *fp;
+     text = calloc(SIZE, sizeof(char));
 
      printf("Write a text string or a file path: ");
      fgets(text, SIZE, stdin);
@@ -23,11 +25,12 @@ char *rot(char text[])
      }
 
      x=strlen(text)+1;
-     t = calloc(SIZE, sizeof(char));
 
      if((fp = fopen(text, "r+"))==0)
      {
-         t = realloc(t, (x) * sizeof(char));
+         text = realloc(text, x * sizeof(char));
+         t = (char*)calloc(x, sizeof(char));
+
          while((text[i]!='\0')&& (strlen(text))<x)
          {
              if(text[i]>122||text[i]<65)
@@ -57,9 +60,9 @@ char *rot(char text[])
              t[i]=text[i]+ROT;
              i++;
          }
-         strcpy(text, t);
+         free(text);
+         printf("%s\n", t);
          free(t);
-         return text;
      }
 
     else
@@ -69,8 +72,8 @@ char *rot(char text[])
         bytes = ftell(fp);
         rewind(fp);
 
-        t = realloc(t, (bytes+1) * sizeof(char));
-        text =  realloc(text, (bytes+1) * sizeof(char));
+        t = (char*)calloc(bytes+1, sizeof(char));
+        free(text);
 
         while((c = getc(fp)) != EOF)
         {
@@ -106,26 +109,28 @@ char *rot(char text[])
         fp = fopen(text, "w+");
         fputs(t, fp);
         fclose(fp);
-        strcpy(text, t);
         free(t);
-        return "done!";
+        printf("done!\n");
     }
  }
 
 
 
 
-char* atbash(char text[])
+void atbash()
 {
     int i=0, x, q, len;
-    FILE *fp;
     char *filename;
+    char *text;
+
+    FILE *fp;
 
     const char zlph_upper[27] = "ZYXWVUTSRQPONMLKJIHGFEDCBA";
     const char zlph_lower[27] = "zyxwvutsrqponmlkjihgfedcba";
     const char alph_lower[27] = "abcdefghijklmnopqrstuvwxyz";
     const char alph_upper[27] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
+    text = (char*)calloc(SIZE, sizeof(char));
 
     printf("Write a text string or a file path: ");
     fgets(text, SIZE, stdin);
@@ -141,12 +146,13 @@ char* atbash(char text[])
          }
      }
 
-    filename = calloc(50, sizeof(char));
-    strncpy(filename, text, 50);
+    filename = (char*)calloc(len, sizeof(char));
+    strcpy(filename, text);
 
     if((fp = fopen(filename, "r+"))==0)
     {
-        text = realloc(text, len);
+        free(filename);
+        text = realloc(text, len * sizeof(char));
         while(1)
         {
             for(x=0;x<=27;x++)
@@ -172,12 +178,12 @@ char* atbash(char text[])
         char c;
         int bytes;
 
-
         fseek(fp, 0, SEEK_END);
         bytes = ftell(fp);
         rewind(fp);
 
-        text =  realloc(text, (bytes+1) * sizeof(char));
+        text = realloc(text, (bytes+1) * sizeof(char));
+
         text[i] = '\0';
         while((c = getc(fp)))
         {
@@ -203,13 +209,15 @@ char* atbash(char text[])
     }
 
     end:
-    return text;
+    printf("%s\n", text);
+    free(text);
 
     fileend:
     fclose(fp);
     fp = fopen(filename, "w+");
     fputs(text, fp);
-    free(filename);
     fclose(fp);
-    return "done!";
+    free(text);
+    free(filename);
+    printf("Done!\n");
 }

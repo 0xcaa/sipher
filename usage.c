@@ -1,7 +1,7 @@
 #include <stdio.h>
 
-void printusage(char *argv[])
+void printusage(char *argv)
 {
-    printf("Usage: %s -cipher \nThen type file or string\n", argv[0]);
-    printf("sipher -l for full cipher list\n");
+    fprintf(stdout, "Usage: %s -cipher \nThen type file or string\n", argv);
+    fprintf(stdout, "sipher -l for full cipher list\n");
 }

@@ -7,32 +7,23 @@
 #include "sipherfuncs.h"
 #include "list.h"
 
-#define SIZE 30000
-
 int main(int argc, char **argv)
 {
     int opt;
-    char *text;
-/*
     if (argc!=2)
     {
-        fprintf(stderr, "Too many arguments!\n");
         printusage(argv[0]);
-        return 1;
+        exit(255);
     }
-*/
+
     while((opt = getopt(argc, argv, "rula")) != -1)
         switch(opt)
         {
             case 'r':
-                text = calloc(SIZE, sizeof(char));
-                printf("%s\n", rot(text));
-                free(text);
+                rot();
                 break;
             case 'a':
-                text = calloc(SIZE, sizeof(char));
-                printf("%s\n", atbash(text));
-                free(text);
+                atbash();
                 break;
             case 'u':
                 printusage(argv[0]);
