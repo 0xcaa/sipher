@@ -16,7 +16,7 @@ int main(int argc, char **argv)
         exit(255);
     }
 
-    while((opt = getopt(argc, argv, "rula")) != -1)
+    while((opt = getopt(argc, argv, "rulag")) != -1)
         switch(opt)
         {
             case 'r':
@@ -25,13 +25,16 @@ int main(int argc, char **argv)
             case 'a':
                 atbash();
                 break;
+             case 'g':
+                gold();
+                break;
             case 'u':
                 printusage(argv[0]);
                 break;
             case 'l':
                 list();
                 break;
-            return 1;
+
         default:
             perror("Invalid Option");
             return 1;
