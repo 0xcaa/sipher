@@ -5,7 +5,7 @@
 
 #include "usage.h"
 #include "sipherfuncs.h"
-#include "list.h"
+#include "rot.h"
 
 int main(int argc, char **argv)
 {

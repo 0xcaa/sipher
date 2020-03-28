@@ -1,12 +1,12 @@
 CC=gcc
 CFLAGS=-g -Wall -pedantic 
-OBJS=sipher.o sipherfuncs.o usage.o list.o
+OBJS=sipher.o sipherfuncs.o usage.o rot.o
 PREFIX=/usr/local
 
 sipher: $(OBJS)
 	$(CC) -o sipher $(OBJS)
 
-sipher.o: sipherfuncs.h usage.h list.h
+sipher.o: sipherfuncs.h usage.h rot.h
 
 clean:
 	rm sipher $(OBJS)
