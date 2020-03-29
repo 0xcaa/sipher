@@ -7,8 +7,8 @@
 #define ROT 1
 #define SIZE 30000
 
-void using_file(char *text,FILE **fp, int x);
-void nonfile(char *text, int x);
+void rot_using_file(char *text,FILE **fp, int x);
+void rot_nonfile(char *text, int x);
 
 void rot(void)
 {
@@ -30,13 +30,13 @@ void rot(void)
      x=strlen(text)+1;
 
      if((fp = fopen(text, "r+"))==0)
-        nonfile(text, x);
+        rot_nonfile(text, x);
 
     else 
-        using_file(text, &fp, x);
+        rot_using_file(text, &fp, x);
 }
 
-void nonfile(char *text, int x)
+void rot_nonfile(char *text, int x)
 {
     char *t;
     int i=0;
@@ -79,7 +79,7 @@ void nonfile(char *text, int x)
 
 }
 
-void using_file(char *text,FILE **fp, int x)
+void rot_using_file(char *text,FILE **fp, int x)
 {
     char c, *t;
     int bytes, i=0;

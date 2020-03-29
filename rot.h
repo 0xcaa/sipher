@@ -1,3 +1,3 @@
 void rot(void);
-void nonfile(char *text, int x);
-void using_file(char *text, FILE **fp, int x);
+void rot_nonfile(char *text, int x);
+void rot_using_file(char *text, FILE **fp, int x);

@@ -4,8 +4,9 @@
 #include <errno.h>
 
 #include "usage.h"
-#include "sipherfuncs.h"
+#include "goldbug.h"
 #include "rot.h"
+#include "atbash.h"
 
 int main(int argc, char **argv)
 {
@@ -26,7 +27,7 @@ int main(int argc, char **argv)
                 atbash();
                 break;
              case 'g':
-                gold();
+                goldbug();
                 break;
             case 'u':
                 printusage(argv[0]);

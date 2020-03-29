@@ -1,0 +1,1 @@
+int goldbug(void);
