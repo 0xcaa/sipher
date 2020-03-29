@@ -19,9 +19,7 @@ int atbash()
 {
     int q, len;
     char *text;
-
     FILE *fp;
-
 
     text = (char*)calloc(SIZE, sizeof(char));
 
@@ -39,12 +37,8 @@ int atbash()
          }
      }
 
-    //filename = (char*)calloc(len, sizeof(char));
-    //strcpy(filename, text);
-
     if((fp = fopen(text, "r+"))==0)
     {
-        //free(filename);
         atbash_nonfile(text, len);
         free(text);
         return 0;
