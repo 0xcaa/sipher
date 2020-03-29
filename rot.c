@@ -7,10 +7,10 @@
 #define ROT 1
 #define SIZE 30000
 
-void rot_using_file(char *text,FILE **fp, int x);
-void rot_nonfile(char *text, int x);
+int rot_using_file(char *text,FILE **fp, int x);
+int rot_nonfile(char *text, int x);
 
-void rot(void)
+int rot(void)
 {
      int x, q;
      char *text;
@@ -34,9 +34,11 @@ void rot(void)
 
     else 
         rot_using_file(text, &fp, x);
+
+    return 0;
 }
 
-void rot_nonfile(char *text, int x)
+int rot_nonfile(char *text, int x)
 {
     char *t;
     int i=0;
@@ -76,10 +78,11 @@ void rot_nonfile(char *text, int x)
          free(text);
          printf("%s\n", t);
          free(t);
+         return 0;
 
 }
 
-void rot_using_file(char *text,FILE **fp, int x)
+int rot_using_file(char *text,FILE **fp, int x)
 {
     char c, *t;
     int bytes, i=0;
@@ -128,4 +131,5 @@ void rot_using_file(char *text,FILE **fp, int x)
     fclose(*fp);
     free(t);
     printf("done!\n");
+    return 0;
 }
